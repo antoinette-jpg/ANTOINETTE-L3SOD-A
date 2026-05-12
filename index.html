@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gikundiro Bar & Lounge</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+
+    
+
+    
+    <header class="topbar">
+        <div class="brand"><img src="BAR LOGO.png" alt="Gikundiro Bar & Lounge Logo" class="logo-img"></div>
+        <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#vip">VIP Rooms</a>
+            <a href="#menu">Menu</a>
+            <a href="#services">Services</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#events">Events</a>
+            <a href="#reserve">Reserve</a>
+        </nav>
+        <div class="nav-actions">
+            <div class="select-group">
+                <select id="language-select" aria-label="Language">
+                    <option value="en" selected>EN</option>
+                    <option value="sw">SW</option>
+                    <option value="rw">RW</option>
+                </select>
+                <select id="currency-select" aria-label="Currency">
+                    <option value="RWF" selected>RWF</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+                <span class="currency-icon" id="currency-icon"><i class="fas fa-money-bill"></i></span>
+            </div>
+            <button id="theme-btn" class="icon-button" title="Change theme"><i class="fas fa-palette"></i></button>
+            <button id="cart-btn" class="icon-button"><i class="fas fa-shopping-cart"></i><span class="badge" id="cart-count">0</span></button>
+            <button id="product-list-btn" class="icon-button" title="Product List" onclick="window.location.href='admin-products.html'"><i class="fas fa-list"></i></button>
+            <button id="login-btn" class="icon-button auth-button" title="Login"><i class="fas fa-user-circle" id="login-icon"></i><span class="status-dot" id="user-dot"></span></button>
+            <span class="user-status" id="user-status">Logged out</span>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero-section">
+            <div class="hero-copy">
+                <p class="eyebrow">Welcome to</p>
+                <h1>Gikundiro Bar & Lounge</h1>
+                <p>Experience luxury nightlife with signature cocktails, VIP rooms, and elite service.</p>
+                <div class="hero-buttons">
+                    <a href="#vip" class="btn btn-primary">Explore VIP</a>
+                    <a href="#reserve" class="btn btn-secondary">Book Now</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="vip" class="section-block">
+            <div class="section-header">
+                <span>VIP Rooms</span>
+                <h2>Private suites for exclusive nights</h2>
+            </div>
+            <div class="card-grid" id="vip-grid">
+            </div>
+        </section>
+
+        <section id="menu" class="section-block dark-block">
+            <div class="section-header">
+                <span>Menu</span>
+                <h2>Food & drinks crafted for VIP taste</h2>
+            </div>
+            <div class="menu-grid" id="menu-grid">
+            </div>
+        </section>
+
+        <section id="services" class="section-block">
+            <div class="section-header">
+                <span>Services</span>
+                <h2>Premium hospitality, every time</h2>
+            </div>
+            <div class="service-grid">
+                <div class="service-card"><i class="fas fa-concierge-bell"></i><h3>Table Service</h3><p>Attentive staff at every moment.</p></div>
+                <div class="service-card"><i class="fas fa-crown"></i><h3>VIP Hosting</h3><p>Private lounges and personalized treatment.</p></div>
+                <div class="service-card"><i class="fas fa-music"></i><h3>Live DJ</h3><p>Curated beats for an unforgettable evening.</p></div>
+                <div class="service-card"><i class="fas fa-birthday-cake"></i><h3>Event Catering</h3><p>Exclusive menus for parties and celebrations.</p></div>
+            </div>
+        </section>
+
+
+        <section class="hero">
+    <div class="hero-content">
+        <h1>Gikundiro Bar & Lounge</h1>
+        <p>Experience luxury nightlife with signature cocktails.</p>
+    </div>
+</section>
+
+        <section id="gallery" class="section-block dark-block">
+            <div class="section-header">
+                <span>Gallery</span>
+                <h2>Moments from the lounge</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item"><span>Lounge Photos</span></div>
+                <div class="gallery-item"><span>Drinks</span></div>
+                <div class="gallery-item"><span>Food</span></div>
+                <div class="gallery-item"><span>Nightlife</span></div>
+            </div>
+        </section>
+
+        <section id="events" class="section-block">
+            <div class="section-header">
+                <span>Events</span>
+                <h2>Upcoming nights you cannot miss</h2>
+            </div>
+            <div class="event-grid" id="event-grid"></div>
+        </section>
+
+        <section id="reserve" class="section-block dark-block">
+            <div class="section-header">
+                <span>Reservation</span>
+                <h2>Book a VIP room or event spot</h2>
+            </div>
+            <form id="reserve-form" class="reserve-form">
+                <div class="form-row"><input type="text" id="reserve-name" placeholder="Name" required><input type="tel" id="reserve-phone" placeholder="Phone" required></div>
+                <div class="form-row"><input type="date" id="reserve-date" required><input type="time" id="reserve-time" required></div>
+                <div class="form-row"><input type="number" id="reserve-people" placeholder="Guests" min="1" required><select id="reserve-type"><option value="VIP Room">VIP Room</option><option value="Event">Event</option></select></div>
+                <button type="submit" class="btn btn-primary">Confirm Reservation</button>
+                <p class="form-note" id="reserve-message"></p>
+            </form>
+        </section>
+    </main>
+
+    <aside id="cart-panel" class="cart-panel">
+        <div class="cart-header"><h3>Your Cart</h3><button id="cart-close" class="icon-button"><i class="fas fa-times"></i></button></div>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-summary"><span>Total</span><strong id="cart-total">0</strong></div>
+        <button id="checkout-btn" class="btn btn-secondary">Checkout</button>
+    </aside>
+
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-head"><h3 id="modal-title">Customer Login</h3><button id="modal-close-btn" class="icon-button"><i class="fas fa-times"></i></button></div>
+            <div class="modal-tabs"><button id="modal-login-tab" class="tab active">Login</button><button id="modal-signup-tab" class="tab">Sign Up</button></div>
+            <form id="auth-form" class="auth-form">
+                <input type="text" id="auth-name" placeholder="Name" class="auth-name" required>
+                <input type="email" id="auth-email" placeholder="Email" required>
+                <input type="password" id="auth-password" placeholder="Password" required>
+                <input type="password" id="auth-confirm" placeholder="Confirm Password" class="auth-confirm">
+                <button type="submit" class="btn btn-primary" id="auth-submit">Login</button>
+                <p class="auth-toggle-prompt" id="auth-toggle-prompt">Don't have an account? <button type="button" id="auth-toggle-btn" class="toggle-link">Sign up here</button></p>
+                <p class="auth-message" id="auth-message"></p>
+            </form>
+        </div>
+    </div>
+
+    <button id="top-btn" class="top-btn"><i class="fas fa-chevron-up"></i></button>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Dashboard | Gikundiro</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body data-page="customer-dashboard">
+  <header class="dash-header">
+    <div class="brand-mark">Gikundiro</div>
+    <button id="logout-btn" class="btn-ghost"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+  </header>
+
+  <main class="dashboard-layout">
+    <section class="dash-panel welcome-panel">
+      <div class="dash-title">
+        <span>Welcome back</span>
+        <h1 id="dashboard-title">Customer</h1>
+      </div>
+      <p id="dashboard-message">Your customer dashboard is ready. Manage your bookings and explore premium lounge services.</p>
+      <div class="action-grid">
+        <a href="customer-login.html" class="dash-card-link"><i class="fa-solid fa-calendar-check"></i> View Reservations</a>
+        <a href="customer-login.html" class="dash-card-link"><i class="fa-solid fa-glass-cheers"></i> Explore VIP Menu</a>
+        <a href="customer-login.html" class="dash-card-link"><i class="fa-solid fa-comments"></i> Contact Support</a>
+      </div>
+    </section>
+
+    <section class="dash-panel info-panel">
+      <div class="dash-card">
+        <h2>Customer Overview</h2>
+        <p>Access your latest bookings, favorite rooms, and upcoming events from one place.</p>
+      </div>
+      <div class="dash-card">
+        <h2>Exclusive Offers</h2>
+        <p>Sign in often to receive VIP recommendations and seasonal promotions.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

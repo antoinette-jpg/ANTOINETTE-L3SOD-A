@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | Gikundiro</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body data-page="admin-login">
+  <div class="page-shell">
+    <div class="hero-panel">
+      <div class="brand-mark">Gikundiro</div>
+      <p class="hero-copy">Admin access for managing bookings, users, and dashboard insights.</p>
+    </div>
+
+    <main class="form-frame">
+      <div class="card-panel">
+        <div class="card-head">
+          <span class="card-label">Admin Portal</span>
+          <h1>Admin Login</h1>
+          <p>Use your admin credentials to enter the dashboard.</p>
+        </div>
+
+        <div class="alert-box" id="alert-box"></div>
+
+        <form id="admin-form" class="auth-form">
+          <div class="input-group">
+            <i class="fa-solid fa-envelope"></i>
+            <input type="email" id="admin-email" placeholder="Admin email" required>
+          </div>
+
+          <div class="input-group">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="admin-password" placeholder="Password" required>
+            <button type="button" class="eye-toggle" data-target="admin-password"><i class="fa-solid fa-eye"></i></button>
+          </div>
+
+          <button type="submit" class="btn-primary" id="admin-button"><span>Login</span><span class="spinner"></span></button>
+        </form>
+
+        <div class="footer-line">
+          <span>Need customer access?</span>
+          <a href="customer-login.html">Customer login</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/script.js"></script>
+</body>
+</html>

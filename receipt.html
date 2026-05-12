@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Receipt | Gikundiro Bar & Lounge</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            background: var(--body-bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        
+        .receipt-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .receipt-card {
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border-soft);
+        }
+        
+        .receipt-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .receipt-logo img {
+            height: 60px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+        
+        .receipt-title {
+            color: var(--gold);
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 0.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .receipt-subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+        
+        .order-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--surface-soft);
+            border-radius: 16px;
+        }
+        
+        .info-section h3 {
+            color: var(--gold);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-section p {
+            color: var(--text);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .items-table {
+            width: 100%;
+            margin-bottom: 2rem;
+            border-collapse: collapse;
+        }
+        
+        .items-table th {
+            background: var(--surface-soft);
+            color: var(--gold);
+            text-align: left;
+            padding: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05rem;
+            font-size: 0.85rem;
+            border-bottom: 2px solid var(--border-soft);
+        }
+        
+        .items-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-soft);
+            color: var(--text);
+        }
+        
+        .items-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .items-table tr:hover {
+            background: var(--surface-soft);
+        }
+        
+        .item-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .item-category {
+            display: block;
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-top: 0.2rem;
+        }
+        
+        .item-quantity {
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .item-price {
+            text-align: right;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        
+        .order-summary {
+            background: var(--surface-soft);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .summary-row:last-child {
+            margin-bottom: 0;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border-soft);
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+        
+        .summary-label {
+            color: var(--muted);
+        }
+        
+        .summary-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        .summary-row:last-child .summary-label,
+        .summary-row:last-child .summary-value {
+            color: var(--gold);
+        }
+        
+        .receipt-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-receipt {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 1.8rem;
+            border-radius: 999px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.08rem;
+            text-decoration: none;
+            border: none;
+            font-size: 0.95rem;
+        }
+        
+        .btn-download {
+            background: var(--gold);
+            color: #070707;
+        }
+        
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(214,178,60,0.3);
+        }
+        
+        .btn-home {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border-soft);
+        }
+        
+        .btn-home:hover {
+            background: var(--surface-soft);
+            transform: translateY(-2px);
+        }
+        
+        .success-message {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(74,222,128,0.1);
+            border: 1px solid rgba(74,222,128,0.3);
+            border-radius: 16px;
+            color: #4ade80;
+            font-weight: 600;
+        }
+        
+        .success-message i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .footer-info {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-soft);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .order-info {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .receipt-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .items-table {
+                font-size: 0.9rem;
+            }
+            
+            .items-table th,
+            .items-table td {
+                padding: 0.75rem 0.5rem;
+            }
+            
+            .receipt-actions {
+                flex-direction: column;
+            }
+            
+            .btn-receipt {
+                width: 100%;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+                color: black;
+                padding: 0;
+            }
+            
+            .receipt-card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            
+            .receipt-actions,
+            .success-message {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-container">
+        <div class="success-message">
+            <i class="fas fa-check-circle"></i>
+            Order Completed Successfully!
+        </div>
+        
+        <div class="receipt-card" id="receiptContent">
+            <div class="receipt-header">
+                <div class="receipt-logo">
+                    <img src="BAR LOGO.png" alt="Gikundiro Bar & Lounge">
+                </div>
+                <h1 class="receipt-title">GIKUNDIRO</h1>
+                <p class="receipt-subtitle">Bar & Lounge - Order Receipt</p>
+            </div>
+            
+            <div class="order-info">
+                <div class="info-section">
+                    <h3>Order Information</h3>
+                    <p><strong>Order ID:</strong> <span id="orderId"></span></p>
+                    <p><strong>Date:</strong> <span id="orderDate"></span></p>
+                    <p><strong>Time:</strong> <span id="orderTime"></span></p>
+                </div>
+                <div class="info-section">
+                    <h3>Customer Information</h3>
+                    <p><strong>Name:</strong> <span id="customerName"></span></p>
+                    <p><strong>Email:</strong> <span id="customerEmail"></span></p>
+                    <p><strong>Payment:</strong> Paid</p>
+                </div>
+            </div>
+            
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody id="receiptItems">
+                    <!-- Items will be populated here -->
+                </tbody>
+            </table>
+            
+            <div class="order-summary">
+                <div class="summary-row">
+                    <span class="summary-label">Subtotal:</span>
+                    <span class="summary-value" id="subtotal">0 RWF</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Tax (10%):</span>
+                    <span class="summary-value" id="tax">0 RWF</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Service Charge:</span>
+                    <span class="summary-value" id="serviceCharge">0 RWF</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Total:</span>
+                    <span class="summary-value" id="total">0 RWF</span>
+                </div>
+            </div>
+            
+            <div class="footer-info">
+                <p>Thank you for choosing Gikundiro Bar & Lounge!</p>
+                <p>For any inquiries, contact us at info@gikundiro.com</p>
+            </div>
+        </div>
+        
+        <div class="receipt-actions">
+            <button class="btn-receipt btn-download" onclick="downloadReceipt()">
+                <i class="fas fa-download"></i>
+                Download Receipt
+            </button>
+            <a href="index.html" class="btn-receipt btn-home">
+                <i class="fas fa-home"></i>
+                Back to Home
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Get order data from URL parameters or localStorage
+        function getOrderData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderData = urlParams.get('order');
+            
+            if (orderData) {
+                return JSON.parse(decodeURIComponent(orderData));
+            }
+            
+            // Fallback to localStorage
+            const lastOrder = localStorage.getItem('gikundiroLastOrder');
+            return lastOrder ? JSON.parse(lastOrder) : null;
+        }
+        
+        // Generate unique order ID
+        function generateOrderId() {
+            const date = new Date();
+            const timestamp = date.getTime();
+            const random = Math.floor(Math.random() * 1000);
+            return `ORD-${timestamp}-${random}`;
+        }
+        
+        // Format currency
+        function formatCurrency(amount) {
+            return `${amount.toLocaleString()} RWF`;
+        }
+        
+        // Populate receipt with order data
+        function populateReceipt(orderData) {
+            if (!orderData) {
+                // Use sample data if no order data found
+                orderData = {
+                    orderId: generateOrderId(),
+                    customerName: 'Guest Customer',
+                    customerEmail: 'guest@example.com',
+                    items: [],
+                    total: 0
+                };
+            }
+            
+            // Order information
+            document.getElementById('orderId').textContent = orderData.orderId || generateOrderId();
+            
+            const now = new Date();
+            document.getElementById('orderDate').textContent = now.toLocaleDateString();
+            document.getElementById('orderTime').textContent = now.toLocaleTimeString();
+            
+            // Customer information
+            document.getElementById('customerName').textContent = orderData.customerName || 'Guest Customer';
+            document.getElementById('customerEmail').textContent = orderData.customerEmail || 'guest@example.com';
+            
+            // Order items
+            const itemsContainer = document.getElementById('receiptItems');
+            let subtotal = 0;
+            
+            if (orderData.items && orderData.items.length > 0) {
+                itemsContainer.innerHTML = orderData.items.map(item => {
+                    const itemTotal = item.price * item.quantity;
+                    subtotal += itemTotal;
+                    
+                    return `
+                        <tr>
+                            <td>
+                                <div class="item-name">${item.name}</div>
+                                <div class="item-category">${item.category || ''}</div>
+                            </td>
+                            <td class="item-quantity">${item.quantity}</td>
+                            <td class="item-price">${formatCurrency(itemTotal)}</td>
+                        </tr>
+                    `;
+                }).join('');
+            } else {
+                itemsContainer.innerHTML = `
+                    <tr>
+                        <td colspan="3" style="text-align: center; color: var(--muted);">
+                            No items found
+                        </td>
+                    </tr>
+                `;
+            }
+            
+            // Calculate totals
+            const tax = Math.round(subtotal * 0.1);
+            const serviceCharge = Math.round(subtotal * 0.05);
+            const total = subtotal + tax + serviceCharge;
+            
+            document.getElementById('subtotal').textContent = formatCurrency(subtotal);
+            document.getElementById('tax').textContent = formatCurrency(tax);
+            document.getElementById('serviceCharge').textContent = formatCurrency(serviceCharge);
+            document.getElementById('total').textContent = formatCurrency(total);
+        }
+        
+        // Download receipt as PDF
+        function downloadReceipt() {
+            const element = document.getElementById('receiptContent');
+            const opt = {
+                margin: 10,
+                filename: `Gikundiro-Receipt-${document.getElementById('orderId').textContent}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            // Show loading state
+            const downloadBtn = document.querySelector('.btn-download');
+            const originalText = downloadBtn.innerHTML;
+            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+            downloadBtn.disabled = true;
+            
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore button state
+                downloadBtn.innerHTML = originalText;
+                downloadBtn.disabled = false;
+            }).catch(error => {
+                console.error('Error generating PDF:', error);
+                downloadBtn.innerHTML = originalText;
+                downloadBtn.disabled = false;
+                alert('Error generating receipt. Please try again.');
+            });
+        }
+        
+        // Initialize receipt when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const orderData = getOrderData();
+            populateReceipt(orderData);
+            
+            // Save order to localStorage for future reference
+            if (orderData) {
+                localStorage.setItem('gikundiroLastOrder', JSON.stringify(orderData));
+            }
+        });
+    </script>
+</body>
+</html>
